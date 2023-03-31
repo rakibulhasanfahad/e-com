@@ -1,0 +1,28 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+<br>
+<br>
+{% if messages %}
+    {% for messages in messages %}
+         <ul>
+             <li>
+                {{messages}}
+             </li>
+         </ul>
+    {% endfor %}
+{% endif %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <h1> Hello,{{user.username}}} </h1>
+    {% endif %}
+</div>
+
+<br>
+<br>
+
+{% endblock %}
+

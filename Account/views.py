@@ -12,11 +12,12 @@ def home(request):
 
 
 def login_page(request):
-    if request.method == 'post':
-        name = request.post['name']
+    if request.method == 'POST':
+        name = request.POST['name']
 
-        password = request.post['password']
+        password = request.POST['password']
         user = authenticate(username=name, password=password)
+        print(user)
         if user:
             login(request, user)
             messages.success(request, "You are Logged In")
@@ -24,9 +25,6 @@ def login_page(request):
         else:
             messages.error(request, 'Your Username or Password is Incorrect')
             return redirect('home')
-
-        return redirect('home')
-
     return render(request, 'Accounts/login.html')
 
 
@@ -64,11 +62,11 @@ def forget_pass(request):
         name = request.post['name']
         email = request.post['email']
         password = request.post['password']
-        use = User.object.get(username=name)
+        use = User.objects.get(username=name)
         if User.email == email:
             User.set_password(password)
             update_session_auth_hash(request, use)
-            messages.succes(request, 'password change done')
+            messages.success(request, 'password change done')
             return redirect('login')
         else:
             messages.error(request, 'email not matched')
